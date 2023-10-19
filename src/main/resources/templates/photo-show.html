@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body th:object="${picture}">
+	<h1>
+		[[*{title}]] <br />
+	</h1>
+	<img th:src="*{url}" width="500px" />
+	<small>[[*{description}]]</small> <br />
+	
+	<h3>
+		Categories:
+	</h3>
+	<ul>
+		<li th:each="category : *{categories}"
+		th:object="${category}"
+		>
+			[[*{name}]]
+		</li>
+	</ul>
+</body>
+</html>

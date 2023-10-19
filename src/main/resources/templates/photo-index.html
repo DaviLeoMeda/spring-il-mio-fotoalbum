@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Your Pictures here:</h1>
+	
+	<form>
+		<label for="search">Search:</label>
+		<input type="text" id="search" name="search" placeholder="insert here">
+		<input type="submit" id="search" value="Find it!"
+	</form>
+	
+	
+	<ul>
+		<li th:each="picture : ${pictures}"
+			th:object="${picture}"
+		>
+			<img th:src="*{url}" width="100px" /> <br />
+			<a th:href="@{/pictures/{id}(id=*{id})}">
+    	        [[*{title}]] <br />
+    	        <small>[[*{description}]]</small><br />
+    	    </a>
+		</li>
+	</ul>
+
+</body>
+</html>

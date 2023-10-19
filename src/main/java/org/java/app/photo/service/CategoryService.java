@@ -17,8 +17,12 @@ public class CategoryService {
 		return categoryRepo.findAll();
 	}
 	
-	public Category finById(int id) {
+	public Category findById(int id) {
 		return categoryRepo.findById(id).get();
+	}
+	
+	public List<Category> findByNameContaining(String name) {
+		return categoryRepo.findByNameContaining(name);
 	}
 	
 	public void save(Category category) {
