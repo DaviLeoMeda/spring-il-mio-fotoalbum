@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<h1>
+		<span th:if="${picture.id < 1}">
+			INSERT NEW PICTURE
+		</span>
+		<span th:if="${picture.id > 0}">
+			UPDATE PICTURE
+		</span>
+	</h1>
+	<form
+		th:object="${picture}"
+		method="POST"
+	>
+	
+		<label for="title">Name</label>
+		<input type="text" id="title" th:field="*{title}" />
+		<br />
+		<div th:if="${#fields.hasErrors('title')}">
+			<ul>
+				<li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+			</ul>
+		</div>
+		<br />
+		
+		<label for="description">Description</label>
+		<input type="text" name="description" th:field="*{description}" />
+		<br />
+		<div th:if="${#fields.hasErrors('description')}">
+			<ul>
+				<li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+			</ul>
+		</div>
+		<br />
+		
+		<label for="url">Picture URL</label>
+		<input type="text" name="url" th:field="*{url}" />
+		<br />
+		<div th:if="${#fields.hasErrors('url')}">
+			<ul>
+				<li th:each="err : ${#fields.errors('url')}" th:text="${err}"></li>
+			</ul>
+		</div>
+		<br />
+		<a href="/pictures/category/create">Insert a new category</a>
+		<br />
+		
+		<div
+			th:each="category : ${categories}"
+			th:object="${category}"
+		>
+			<input 
+				type="checkbox" 
+				th:id="${'categories-' + category.id}"
+				th:value="*{id}"
+				th:field="${picture.categories}"
+			>
+			<label
+				th:for="${'categories-' + category.id}"
+			>
+				[[*{name}]]
+			</label>
+		</div>
+		
+			
+		
+		
+		<input type="submit" th:value="${picture.id < 0 ? 'Let me create it!' : 'Let me update it!'}" />
+	
+	</form>
+
+</body>
+</html>

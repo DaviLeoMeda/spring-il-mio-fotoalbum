@@ -95,15 +95,15 @@ public class Picture {
 		this.categories = categories;
 	}
 	
-//	public boolean hasCategory(Category categories) {
-//		if (getCategories() == null) return false;
-//		
-//		for (Category cat : getCategories())
-//			if (category.getId() == cat.getId())
-//				return true;
-//		
-//		return false;
-//	}
+	public boolean hasCategory(Category category) {
+		if (getCategories() == null) return false;
+		
+		for (Category cat : getCategories())
+			if (category.getId() == cat.getId())
+				return true;
+		
+		return false;
+	}
 	
 	@Override
 	public String toString() {

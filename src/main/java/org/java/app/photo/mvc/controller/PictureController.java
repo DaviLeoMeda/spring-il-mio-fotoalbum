@@ -42,13 +42,15 @@ public class PictureController {
 				? categoryService.findAll()
 				: categoryService.findByNameContaining(search);
 				
-		model.addAttribute("picture", pictures);
+		model.addAttribute("pictures", pictures);
 		model.addAttribute("category", categories);
+		
+		
 		
 		return "photo-index";
 	}
 	
-	@GetMapping("/pictures/{id}")
+	@GetMapping("/{id}")
 	public String getShow(
 			@PathVariable int id, Model model) {
 		
@@ -66,22 +68,28 @@ public class PictureController {
 		
 		model.addAttribute("picture", new Picture());
 		model.addAttribute("categories", categories);
-		
+		System.out.println("fine create");
 		return "photo-create";
 	}
 	
 	@PostMapping("/create")
 	public String storePhoto(
 			@Valid @ModelAttribute Picture formPhoto,
-			BindingResult bindingResult) {
+			BindingResult bindingResult,
+			Model model) {
+		
+	System.out.println("store");	
+		
 		if(bindingResult.hasErrors()) {
 			System.out.println("Error: ");
 			bindingResult.getAllErrors().stream()
 			.map(e -> e.getDefaultMessage())
 			.forEach(System.out::println);
 		
+			System.out.println("New Photo: " + formPhoto);
 			
 			return "photo-create";
+			
 		} else {
 			System.out.println("Data confirmed.");
 		}	
@@ -132,7 +140,7 @@ public class PictureController {
 			System.out.println(e.getMessage());
 		}
 		
-		return "redirect:/picture";
+		return "redirect:/pictures";
 	}
 	
 	@PostMapping("/delete/{id}")
@@ -143,6 +151,48 @@ public class PictureController {
 		pictureService.deletePicture(picture);
 		
 		
+		return "redirect:/pictures";
+	}
+	
+	@GetMapping("/category/create")
+	public String getCreateCat(Model model) {
+		
+		List<Category> categories = categoryService.findAll();
+		
+		model.addAttribute("category", new Category());
+		model.addAttribute("categories", categories);
+		
+		return "category-create";
+	}
+	
+	@PostMapping("/category/create")
+	public String storeCategory(
+			@Valid @ModelAttribute Category formCat,
+			BindingResult bindingResult,
+			Model model) {
+		
+	System.out.println("store");	
+		
+		if(bindingResult.hasErrors()) {
+			System.out.println("Error: ");
+			bindingResult.getAllErrors().stream()
+			.map(e -> e.getDefaultMessage())
+			.forEach(System.out::println);
+		
+			System.out.println("New Category: " + formCat);
+			
+			return "category-create";
+			
+		} else {
+			System.out.println("Data confirmed.");
+		}	
+		
+		try {categoryService.save(formCat);
+		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+			
 		return "redirect:/pictures";
 	}
 	

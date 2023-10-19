@@ -1,5 +1,11 @@
 package org.java.app;
 
+
+
+import org.java.app.photo.mvc.auth.pojo.Role;
+import org.java.app.photo.mvc.auth.pojo.User;
+import org.java.app.photo.mvc.auth.service.RoleService;
+import org.java.app.photo.mvc.auth.service.UserService;
 import org.java.app.photo.pojo.Category;
 import org.java.app.photo.pojo.Picture;
 import org.java.app.photo.service.CategoryService;
@@ -8,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
@@ -17,6 +24,12 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private RoleService roleService;
+	
+	@Autowired
+	private UserService userService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringIlMioFotoalbumApplication.class, args);
@@ -49,6 +62,24 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 		pictureService.save(pic3);
 		
 		System.out.println("Insert done!");
+		
+		
+		
+		
+		Role userRole = new Role("USER");
+		Role adminRole = new Role("ADMIN");
+		
+		roleService.save(adminRole);
+		roleService.save(userRole);
+		
+		final String pwdAdmin = new BCryptPasswordEncoder().encode("pwd");
+		final String pwdUser = new BCryptPasswordEncoder().encode("pwd");
+		
+		User laforgeAdmin = new User("laforge", pwdAdmin, adminRole);
+		User tuckerUser = new User("tucker", pwdUser, userRole);
+		
+		userService.save(laforgeAdmin);
+		userService.save(tuckerUser);
 	
 	}
 

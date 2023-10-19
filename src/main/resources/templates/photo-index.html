@@ -7,10 +7,14 @@
 <body>
 	<h1>Your Pictures here:</h1>
 	
+	
+	<a href="/pictures/create">Insert a new photo</a> <br />
+	<a href="/pictures/category/create">Insert a new category</a>
+	<br /><br />
 	<form>
 		<label for="search">Search:</label>
 		<input type="text" id="search" name="search" placeholder="insert here">
-		<input type="submit" id="search" value="Find it!"
+		<input type="submit" id="search" value="Find it!">
 	</form>
 	
 	
@@ -18,11 +22,21 @@
 		<li th:each="picture : ${pictures}"
 			th:object="${picture}"
 		>
-			<img th:src="*{url}" width="100px" /> <br />
 			<a th:href="@{/pictures/{id}(id=*{id})}">
     	        [[*{title}]] <br />
     	        <small>[[*{description}]]</small><br />
     	    </a>
+    	    -
+    	    <a th:href="@{/pictures/update/{id}(id=*{id})}">
+				EDIT
+			</a>
+			-
+			<form th:action="@{/pictures/delete/{id}(id=*{id})}" 
+				method="POST"
+				style="display: inline;">
+				<input type="submit" value="DELETE">
+			</form>
+			
 		</li>
 	</ul>
 

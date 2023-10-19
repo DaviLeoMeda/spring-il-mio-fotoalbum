@@ -54,15 +54,15 @@ public class Category {
 		this.name = name;
 	}
 	
-//	public boolean hasPicture(Picture pictures) {
-//		if (getPictures() == null) return false;
-//		
-//		for (Picture pic : getPictures())
-//			if (picture.getId() == pic.getId())
-//				return true;
-//		
-//		return false;
-//	}
+	public boolean hasPicture(Picture picture) {
+		if (getPictures() == null) return false;
+		
+		for (Picture pic : getPictures())
+			if (picture.getId() == pic.getId())
+				return true;
+		
+		return false;
+	}
 	
 	@Override
 	public String toString() {
