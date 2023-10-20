@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
+import org.java.app.api.dto.PictureDTO;
 
-
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -47,6 +47,7 @@ public class Picture {
 	private boolean visible;
 	
 	@ManyToMany
+	@JsonBackReference
 	private List<Category> categories;
 	
 	public Picture() {  }
@@ -58,6 +59,16 @@ public class Picture {
 		setVisible(visible);
 		setCategories(Arrays.asList(categories));
 	}
+	
+	public Picture(PictureDTO pictureDto) {
+		
+		setTitle(pictureDto.getTitle());
+		setDescription(pictureDto.getDescription());
+		setUrl(pictureDto.getUrl());
+		setVisible(pictureDto.isVisible());
+		
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -103,6 +114,13 @@ public class Picture {
 				return true;
 		
 		return false;
+	}
+	
+	public void fillFromPictureDto(PictureDTO pictureDto) {
+		setTitle(pictureDto.getTitle());
+		setDescription(pictureDto.getDescription());
+		setUrl(pictureDto.getUrl());
+		setVisible(pictureDto.isVisible());
 	}
 	
 	@Override

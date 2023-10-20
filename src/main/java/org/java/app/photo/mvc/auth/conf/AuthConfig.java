@@ -18,6 +18,7 @@ public class AuthConfig {
 		SecurityFilterChain filterChain(HttpSecurity http)
 			throws Exception {
 				http.csrf().disable().authorizeHttpRequests()
+					.requestMatchers("/api/v1.0/").permitAll()
 					.requestMatchers("/pictures/create").hasAuthority("ADMIN")
 					.requestMatchers("/pictures/update/").hasAuthority("ADMIN")
 					.requestMatchers("/pictures/delete/").hasAuthority("ADMIN")

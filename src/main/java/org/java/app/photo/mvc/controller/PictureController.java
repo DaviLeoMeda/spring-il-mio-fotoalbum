@@ -1,7 +1,7 @@
 package org.java.app.photo.mvc.controller;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import org.java.app.photo.pojo.Category;
 import org.java.app.photo.pojo.Picture;
@@ -54,7 +54,7 @@ public class PictureController {
 	public String getShow(
 			@PathVariable int id, Model model) {
 		
-		Picture picture = pictureService.findById(id);
+		Optional<Picture> picture = pictureService.findById(id);
 		model.addAttribute("picture", picture);
 		
 		return "photo-show";
@@ -109,7 +109,7 @@ public class PictureController {
 			Model model) {
 		
 		List<Category> categories = categoryService.findAll();
-		Picture picture = pictureService.findById(id);
+		Optional<Picture> picture = pictureService.findById(id);
 		
 		model.addAttribute("picture", picture);
 		model.addAttribute("categories", categories);
@@ -146,7 +146,7 @@ public class PictureController {
 	@PostMapping("/delete/{id}")
 	public String deletePhoto(@PathVariable int id) {
 		
-		Picture picture = pictureService.findById(id);
+		Picture picture = pictureService.findById(id).get();
 		
 		pictureService.deletePicture(picture);
 		
